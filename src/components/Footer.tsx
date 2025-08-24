@@ -53,9 +53,9 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">THÔNG TIN LIÊN HỆ</h3>
                         <address className="not-italic space-y-2 text-gray-400">
-                            <p><strong>Địa chỉ:</strong> Số 10, Đường ABC, Phúc Yên, Vĩnh Phúc</p>
+                            <p><strong>Địa chỉ:</strong> Số 10, Ngõ 192, Thái Thịnh, Đống Đa, Hà Nội</p>
                             <p><strong>Hotline:</strong> <a href="tel:0334403206" className="hover:text-white">033.440.3206</a></p>
-                            <p><strong>Email:</strong> <a href="mailto:contact@duyminh.com" className="hover:text-white">contact@duyminh.com</a></p>
+                            <p><strong>Email:</strong> <a href="mailto:contact@duyminh.com" className="hover:text-white">minhson789999@gmail.com</a></p>
                         </address>
                     </div>
 
