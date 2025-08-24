@@ -11,6 +11,7 @@ export interface IProduct {
     image: string;
     category: string;
     price: IPrice;
+    quantity: number;
     // Các trường dưới đây chưa có trong schema, cần thêm vào để hiển thị đầy đủ
     rating?: number;       // Số sao đánh giá
     reviewCount?: number;  // Số lượng đánh giá
