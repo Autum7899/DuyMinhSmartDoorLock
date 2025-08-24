@@ -38,7 +38,6 @@ const Navbar = () => {
         };
     }, []);
 
-
     return (
         <header className="bg-white shadow-sm">
             <div className="container mx-auto px-4">
@@ -47,11 +46,19 @@ const Navbar = () => {
                     <div ref={dropdownRef} className="relative border-r border-gray-200 pr-6 mr-6">
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="flex items-center gap-3 text-sm font-semibold text-gray-800 hover:text-red-600 transition-colors"
+                            className="
+                flex items-center gap-3
+                text-xs sm:text-sm md:text-[15px]
+                font-semibold text-gray-800
+                hover:text-red-600 transition-colors
+              "
                         >
                             <Menu size={20} />
                             <span>DANH MỤC SẢN PHẨM</span>
-                            <ChevronDown size={16} className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                            <ChevronDown
+                                size={16}
+                                className={`transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                            />
                         </button>
 
                         {/* Menu Dropdown */}
@@ -63,7 +70,11 @@ const Navbar = () => {
                                             <Link href={category.href}>
                                                 <div
                                                     onClick={() => setIsDropdownOpen(false)}
-                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-red-600 cursor-pointer"
+                                                    className="
+                            block px-4 py-2
+                            text-xs sm:text-sm
+                            text-gray-700 hover:bg-gray-100 hover:text-red-600 cursor-pointer
+                          "
                                                 >
                                                     {category.label}
                                                 </div>
@@ -76,10 +87,15 @@ const Navbar = () => {
                     </div>
 
                     {/* Phần Link điều hướng */}
-                    <nav className="flex items-center space-x-6 text-sm font-medium">
+                    <nav className="flex items-center space-x-6">
                         {navLinks.map((link) => (
                             <Link key={link.href} href={link.href}>
-                                <div className="text-gray-700 hover:text-red-600 transition-colors cursor-pointer">
+                                <div
+                                    className="
+                    text-gray-700 hover:text-red-600 transition-colors cursor-pointer
+                    text-xs sm:text-sm md:text-[15px] font-medium
+                  "
+                                >
                                     {link.label}
                                 </div>
                             </Link>
