@@ -6,6 +6,7 @@ import "@/app/globals.css";
 import Header from '@/components/Header'; // Import Header
 import Footer from '@/components/Footer'; // Import Footer
 import Navbar from '@/components/Navbar';
+import ContactBubble from '@/components/ContactBubble';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
         <main className="min-h-screen">
             {children}
         </main>
+        <ContactBubble />
         <Footer />
         </body>
         </html>

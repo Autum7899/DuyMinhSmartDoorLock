@@ -68,9 +68,7 @@ const sampleProducts: (IProduct & { _id: string })[] = [
 export default function HomePage() {
     return (
         <main className="bg-gray-50">
-            {/* Bạn có thể giữ lại HeroSection nếu muốn */}
-            {/* <HeroSection /> */}
-
+             <HeroSection />
             {/* Phần hiển thị sản phẩm */}
             <section className="container mx-auto px-4 py-12">
                 <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Sản phẩm nổi bật</h2>
