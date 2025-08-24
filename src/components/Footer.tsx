@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Youtube, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
@@ -12,7 +13,7 @@ const Footer = () => {
                     {/* Cột 1: Logo và Giới thiệu */}
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center space-x-2">
-                            <img src="/logo.png" alt="Duy Minh Logo" style={{ height: '50px' }} />
+                            <Image src="/logo.png" alt="Duy Minh Logo" width={50} height={50} />
                             <div>
                                 <div className="font-bold text-lg">Duy Minh</div>
                                 <div className="text-xs text-gray-300">Smart Door Lock</div>

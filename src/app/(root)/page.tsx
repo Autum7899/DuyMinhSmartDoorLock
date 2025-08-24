@@ -16,6 +16,7 @@ const sampleProducts: (IProduct & { _id: string })[] = [
             retail: 7990000,          // Giá gốc để gạch ngang
             retailWithInstall: 6499000, // Giá bán chính
         },
+        quantity: 10,
         // Dữ liệu giả cho các trường còn thiếu trong schema
         rating: 5,
         reviewCount: 25,
@@ -31,6 +32,7 @@ const sampleProducts: (IProduct & { _id: string })[] = [
             retail: 6500000,
             retailWithInstall: 5490000,
         },
+        quantity: 10,
         rating: 4.5,
         reviewCount: 18,
         features: ['Vân tay', 'App Tuya', 'Thẻ từ'],
@@ -45,6 +47,7 @@ const sampleProducts: (IProduct & { _id: string })[] = [
             retail: 6990000,
             retailWithInstall: 5499000,
         },
+        quantity: 10,
         rating: 4,
         reviewCount: 32,
         features: ['Camera', 'Vân tay', 'Mật khẩu'],
@@ -59,6 +62,7 @@ const sampleProducts: (IProduct & { _id: string })[] = [
             retail: 5950000,
             retailWithInstall: 5353000,
         },
+        quantity: 10,
         rating: 5,
         reviewCount: 12,
         features: ['Chống nước', 'Vân tay', 'Thẻ từ'],

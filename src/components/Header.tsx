@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronDown, Phone, User, ShoppingCart, Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
 import { useState } from 'react';
+import Image from 'next/image';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,7 @@ const Header = () => {
                                 <div className="font-bold text-xl tracking-wide">Duy Minh</div>
                                 <div className="text-xs text-gray-300">Smart Door Lock</div>
                             </div>
-                            <img src="/logo.png" alt="Duy Minh Smart Door Lock Logo" style={{ height: '60px', objectFit: 'contain' }} />
+                            <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={60} height={60} style={{ objectFit: 'contain' }} />
                         </Link>
                     </div>
 
@@ -54,7 +55,7 @@ const Header = () => {
                 <div className="md:hidden flex items-center justify-between h-16">
                     {/* Logo và Tên thương hiệu (rút gọn) */}
                     <Link href="/" className="flex items-center space-x-2 no-underline text-white">
-                        <img src="/logo.png" alt="Duy Minh Smart Door Lock Logo" style={{ height: '40px', objectFit: 'contain' }} />
+                        <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={40} height={40} style={{ objectFit: 'contain' }} />
                         <div>
                             <div className="font-bold text-base">Duy Minh</div>
                             <div className="text-xs text-gray-300">Smart Door Lock</div>

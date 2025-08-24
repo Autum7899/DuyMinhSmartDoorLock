@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import { Phone, ShoppingCart, User, Search, Menu } from 'lucide-react';
 
 // Metadata cho SEO
 export const metadata: Metadata = {
@@ -47,7 +46,7 @@ export default function ChinhSachDaiLyPage() {
                     <section className="bg-white p-8 rounded-lg shadow-md mb-16 text-center">
                         <h2 className="text-3xl font-semibold text-gray-800 mb-4">Sứ Mệnh Của Chúng Tôi</h2>
                         <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto">
-                            Với sứ mệnh <b className="font-semibold text-blue-600">"Tạo ra những sản phẩm khóa thông minh chất lượng cao mà người dân bình thường đều có thể sử dụng"</b>, JW không ngừng nỗ lực để trở thành nhà sản xuất ODM/OEM khóa thông minh chuyên nghiệp và uy tín. Chúng tôi mong muốn hợp tác với các đại lý và nhà phân phối có cùng tầm nhìn để phát triển bền vững.
+                            Với sứ mệnh <b className="font-semibold text-blue-600">&quot;Tạo ra những sản phẩm khóa thông minh chất lượng cao mà người dân bình thường đều có thể sử dụng&quot;</b>, JW không ngừng nỗ lực để trở thành nhà sản xuất ODM/OEM khóa thông minh chuyên nghiệp và uy tín. Chúng tôi mong muốn hợp tác với các đại lý và nhà phân phối có cùng tầm nhìn để phát triển bền vững.
                         </p>
                     </section>
 
