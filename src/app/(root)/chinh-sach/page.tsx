@@ -47,7 +47,7 @@ export default function ChinhSachDaiLyPage() {
                     <section className="bg-white p-8 rounded-lg shadow-md mb-16 text-center">
                         <h2 className="text-3xl font-semibold text-gray-800 mb-4">Sứ Mệnh Của Chúng Tôi</h2>
                         <p className="text-gray-700 leading-relaxed max-w-4xl mx-auto">
-                            [cite_start]Với sứ mệnh <b className="font-semibold text-blue-600">"Tạo ra những sản phẩm khóa thông minh chất lượng cao mà người dân bình thường đều có thể sử dụng"</b> [cite: 115][cite_start], JW không ngừng nỗ lực để trở thành nhà sản xuất ODM/OEM khóa thông minh chuyên nghiệp và uy tín[cite: 104, 115]. Chúng tôi mong muốn hợp tác với các đại lý và nhà phân phối có cùng tầm nhìn để phát triển bền vững.
+                            Với sứ mệnh <b className="font-semibold text-blue-600">"Tạo ra những sản phẩm khóa thông minh chất lượng cao mà người dân bình thường đều có thể sử dụng"</b>, JW không ngừng nỗ lực để trở thành nhà sản xuất ODM/OEM khóa thông minh chuyên nghiệp và uy tín. Chúng tôi mong muốn hợp tác với các đại lý và nhà phân phối có cùng tầm nhìn để phát triển bền vững.
                         </p>
                     </section>
 
@@ -61,7 +61,7 @@ export default function ChinhSachDaiLyPage() {
                                 <div className="md:w-1/2">
                                     <h3 className="text-2xl font-bold text-gray-800 mb-3">Chất Lượng Tạo Dựng Danh Tiếng</h3>
                                     <p className="text-gray-600 mb-4">
-                                        [cite_start]Sản phẩm của chúng tôi được chứng nhận bởi các cơ quan có thẩm quyền quốc gia, sở hữu hơn 50 chứng nhận uy tín và 100 bằng sáng chế thiết kế[cite: 201, 202, 205]. [cite_start]Chúng tôi cam kết chất lượng đáng tin cậy đã giành được sự tin tưởng của khách hàng trên 30 quốc gia[cite: 207, 208].
+                                        Sản phẩm của chúng tôi được chứng nhận bởi các cơ quan có thẩm quyền quốc gia, sở hữu hơn 50 chứng nhận uy tín và 100 bằng sáng chế thiết kế. Chúng tôi cam kết chất lượng đáng tin cậy đã giành được sự tin tưởng của khách hàng trên 30 quốc gia.
                                     </p>
                                 </div>
                                 <div className="md:w-1/2">
@@ -74,7 +74,7 @@ export default function ChinhSachDaiLyPage() {
                                 <div className="md:w-1/2">
                                     <h3 className="text-2xl font-bold text-gray-800 mb-3">Năng Lực Sản Xuất Vượt Trội</h3>
                                     <p className="text-gray-600 mb-4">
-                                        [cite_start]Nhà máy vận hành trên diện tích gần 4000m² với khoảng 300 nhân viên, đạt công suất thiết kế trên 10.000 bộ khóa thông minh mỗi tháng[cite: 120, 123, 128]. Nguồn cung ổn định, đáp ứng mọi nhu cầu dự án và phân phối.
+                                        Nhà máy vận hành trên diện tích gần 4000m² với khoảng 300 nhân viên, đạt công suất thiết kế trên 10.000 bộ khóa thông minh mỗi tháng. Nguồn cung ổn định, đáp ứng mọi nhu cầu dự án và phân phối.
                                     </p>
                                 </div>
                                 <div className="md:w-1/2">
@@ -87,7 +87,7 @@ export default function ChinhSachDaiLyPage() {
                                 <div className="md:w-1/2">
                                     <h3 className="text-2xl font-bold text-gray-800 mb-3">Công Nghệ Tiên Phong & Hỗ Trợ Toàn Diện</h3>
                                     <p className="text-gray-600 mb-4">
-                                        [cite_start]Chúng tôi luôn đi đầu với các dòng sản phẩm đa dạng từ khóa nhận diện khuôn mặt 3D, khóa vân tay một chạm đến khóa chuyên dụng cho cửa nhôm[cite: 64]. Đối tác sẽ được cung cấp đầy đủ tài liệu marketing, hỗ trợ kỹ thuật và chính sách chiết khấu hấp dẫn để đảm bảo kinh doanh hiệu quả.
+                                        Chúng tôi luôn đi đầu với các dòng sản phẩm đa dạng từ khóa nhận diện khuôn mặt 3D, khóa vân tay một chạm đến khóa chuyên dụng cho cửa nhôm. Đối tác sẽ được cung cấp đầy đủ tài liệu marketing, hỗ trợ kỹ thuật và chính sách chiết khấu hấp dẫn để đảm bảo kinh doanh hiệu quả.
                                     </p>
                                 </div>
                                 <div className="md:w-1/2">
