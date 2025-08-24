@@ -4,7 +4,7 @@ import Image from 'next/image';
 const ContactBubble = () => {
     // THAY ĐỔI CÁC LINK DƯỚI ĐÂY
     const zaloLink = "https://zalo.me/098221609"; // Thay YOUR_ZALO_PHONE_NUMBER bằng SĐT Zalo của bạn
-    const messengerLink = "https://m.me/YOUR_FACEBOOK_PAGE_ID"; // Thay YOUR_FACEBOOK_PAGE_ID bằng ID trang Facebook của bạn
+    const messengerLink = "https://www.facebook.com/profile.php?id=61579515821610"; // Thay YOUR_FACEBOOK_PAGE_ID bằng ID trang Facebook của bạn
 
     return (
         <div className="fixed bottom-5 right-5 flex flex-col items-center gap-3 z-50">
