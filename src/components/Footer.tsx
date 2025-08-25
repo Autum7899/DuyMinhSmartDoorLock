@@ -23,7 +23,7 @@ const Footer = () => {
                             Chuyên cung cấp và lắp đặt khóa cửa thông minh, khóa vân tay, khóa điện tử chính hãng với giá tốt nhất.
                         </p>
                         <div className="flex space-x-4">
-                            <a href="#" aria-label="Facebook" className="text-gray-400 hover:text-white"><Facebook /></a>
+                            <a href="https://www.facebook.com/profile.php?id=61579515821610" aria-label="Facebook" className="text-gray-400 hover:text-white"><Facebook /></a>
                             <a href="#" aria-label="Youtube" className="text-gray-400 hover:text-white"><Youtube /></a>
                             <a href="#" aria-label="Zalo" className="text-gray-400 hover:text-white"><MessageCircle /></a>
                         </div>
@@ -55,8 +55,8 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold mb-4">THÔNG TIN LIÊN HỆ</h3>
                         <address className="not-italic space-y-2 text-gray-400">
                             <p><strong>Địa chỉ:</strong> Số 10, Ngõ 192, Thái Thịnh, Đống Đa, Hà Nội</p>
-                            <p><strong>Hotline:</strong> <a href="tel:0334403206" className="hover:text-white">033.440.3206</a></p>
-                            <p><strong>Email:</strong> <a href="mailto:contact@duyminh.com" className="hover:text-white">minhson789999@gmail.com</a></p>
+                            <p><strong>Hotline:</strong> <a href="tel:0982216069" className="hover:text-white">0982216069</a></p>
+                            <p><strong>Email:</strong> <a href="jwsmartlock@gmail.com" className="hover:text-white">jwsmartlock@gmail.com</a></p>
                         </address>
                     </div>
 
