@@ -80,6 +80,7 @@ export default async function HomePage() {
                 return (
                     <section
                         key={category.id}
+                        id={category.name}
                         className="bg-white py-12"
                     >
                         <div className="container mx-auto px-4">
