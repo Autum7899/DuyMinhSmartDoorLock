@@ -78,13 +78,6 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Nội dung */}
                 <div className="p-4">
                     {/* Rating demo */}
-                    <div className="flex items-center gap-1 mb-2">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                            <StarIcon key={i} fill="currentColor" />
-                        ))}
-                        <span className="ml-2 text-xs text-gray-500">(5.0)</span>
-                    </div>
-
                     <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 min-h-[40px]">
                         {product.name}
                     </h3>

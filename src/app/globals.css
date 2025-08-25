@@ -24,3 +24,15 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@font-face {
+    font-family: 'Etna';
+    src: url('/fonts/Etna.otf') format('opentype');
+    font-display: swap;
+}
+
+@layer utilities {
+    .font-etna {
+        font-family: 'Etna', sans-serif;
+    }
+}

@@ -15,7 +15,7 @@ const Footer = () => {
                         <Link href="/" className="flex items-center space-x-2">
                             <Image src="/logo.png" alt="Duy Minh Logo" width={50} height={50} />
                             <div>
-                                <div className="font-bold text-lg">Duy Minh</div>
+                                <div className="font-bold text-lg font-etna ">Duy Minh</div>
                                 <div className="text-xs text-gray-300">Smart Door Lock</div>
                             </div>
                         </Link>

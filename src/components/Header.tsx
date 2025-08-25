@@ -19,7 +19,7 @@ const Header = () => {
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center space-x-4 no-underline text-white">
                             <div className="text-left">
-                                <div className="font-bold text-xl tracking-wide">Duy Minh</div>
+                                <div className="font-bold text-xl tracking-wide font-etna">Duy Minh</div>
                                 <div className="text-xs text-gray-300">Smart Door Lock</div>
                             </div>
                             <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={60} height={60} style={{ objectFit: 'contain' }} />
