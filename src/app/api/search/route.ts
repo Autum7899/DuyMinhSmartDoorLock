@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
-import { Prisma } from '@prisma/client';
+import {Prisma, products} from '@prisma/client';
+
+// Định nghĩa kiểu dữ liệu cho sản phẩm trả về từ Prisma, bao gồm cả category
+type ProductWithCategory = products & {
+    categories: { name: string } | null;
+};
+
 
 // Hàm helper để định dạng sản phẩm, tránh lặp code
-const formatProduct = (product: any) => ({
+const formatProduct = (product: ProductWithCategory) => ({
     id: product.id,
     name: product.name,
     image: product.image_url,
@@ -43,45 +49,43 @@ export async function GET(request: Request) {
         });
 
         const foundIds = new Set(nameStartsWithResults.map((p) => p.id));
-        let combinedResults = [...nameStartsWithResults];
+
+        const resultsAfterNameStart = [...nameStartsWithResults];
 
         // 2. Ưu tiên 2: Nếu chưa đủ, tìm các sản phẩm có TÊN CHỨA searchQuery
-        if (combinedResults.length < limit) {
-            const nameContainsResults = await prisma.products.findMany({
-                where: {
-                    name: {
-                        contains: searchQuery,
-                        mode: 'insensitive',
-                    },
-                    NOT: { // Bỏ qua những ID đã tìm thấy ở bước 1
-                        id: { in: Array.from(foundIds) },
-                    },
+        const nameContainsResults = resultsAfterNameStart.length < limit ? await prisma.products.findMany({
+            where: {
+                name: {
+                    contains: searchQuery,
+                    mode: 'insensitive',
                 },
-                take: limit - combinedResults.length,
-                include: { categories: { select: { name: true } } },
-            });
+                NOT: { // Bỏ qua những ID đã tìm thấy ở bước 1
+                    id: { in: Array.from(foundIds) },
+                },
+            },
+            take: limit - resultsAfterNameStart.length,
+            include: { categories: { select: { name: true } } },
+        }) : [];
 
-            nameContainsResults.forEach(p => foundIds.add(p.id));
-            combinedResults.push(...nameContainsResults);
-        }
+        nameContainsResults.forEach(p => foundIds.add(p.id));
+        const resultsAfterNameContains = [...resultsAfterNameStart, ...nameContainsResults];
 
         // 3. Ưu tiên 3: Nếu vẫn chưa đủ, tìm trong MÔ TẢ và DANH MỤC
-        if (combinedResults.length < limit) {
-            const otherResults = await prisma.products.findMany({
-                where: {
-                    OR: [
-                        { description: { contains: searchQuery, mode: 'insensitive' } },
-                        { categories: { name: { contains: searchQuery, mode: 'insensitive' } } },
-                    ],
-                    NOT: { // Bỏ qua tất cả ID đã tìm thấy
-                        id: { in: Array.from(foundIds) },
-                    },
+        const otherResults = resultsAfterNameContains.length < limit ? await prisma.products.findMany({
+            where: {
+                OR: [
+                    { description: { contains: searchQuery, mode: 'insensitive' } },
+                    { categories: { name: { contains: searchQuery, mode: 'insensitive' } } },
+                ],
+                NOT: { // Bỏ qua tất cả ID đã tìm thấy
+                    id: { in: Array.from(foundIds) },
                 },
-                take: limit - combinedResults.length,
-                include: { categories: { select: { name: true } } },
-            });
-            combinedResults.push(...otherResults);
-        }
+            },
+            take: limit - resultsAfterNameContains.length,
+            include: { categories: { select: { name: true } } },
+        }) : [];
+
+        const combinedResults = [...resultsAfterNameContains, ...otherResults];
 
         // Định dạng lại toàn bộ kết quả cuối cùng
         const formattedProducts = combinedResults.map(formatProduct);

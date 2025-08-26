@@ -2,7 +2,7 @@
 'use client'; // Thêm dòng này ở đầu file vì chúng ta đang dùng useState
 
 import Link from 'next/link';
-import { ChevronDown, Phone, User, ShoppingCart, Menu, X } from 'lucide-react';
+import { Phone, User, ShoppingCart, Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Image from 'next/image';

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { cache } from "react";
 import ProductView from "@/components/ProductView";
-import { products } from "@prisma/client";
+
 
 interface ProductPageProps {
     params: {

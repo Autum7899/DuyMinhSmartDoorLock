@@ -2,7 +2,7 @@
 import HeroSection from '@/components/HeroSection';
 import ProductCard from '@/components/ProductCard';
 import { prisma } from '@/lib/db/prisma';
-import Link from 'next/link';
+
 
 export const revalidate = 60; // ISR mỗi 60s (tuỳ chỉnh)
 
