@@ -131,11 +131,11 @@ export default async function ProductPage({ params: { slug } }: ProductPageProps
                                 </button>
                                 <div className="grid grid-cols-2 gap-2">
                                     <button className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors text-sm">
-                                        090 776 1102
+                                        033 440 3206
                                         <span className="block text-xs">Tư vấn trực tuyến 24/7</span>
                                     </button>
                                     <button className="bg-blue-800 text-white p-2 rounded-md hover:bg-blue-900 transition-colors text-sm">
-                                        084 568 1080
+                                        098 221 6069
                                         <span className="block text-xs">Hỗ trợ kỹ thuật 24/7</span>
                                     </button>
                                 </div>
@@ -168,15 +168,15 @@ export default async function ProductPage({ params: { slug } }: ProductPageProps
                                 <div className="flex items-start gap-2">
                                     <MapPin size={16} className="text-gray-400 mt-1" />
                                     <div>
-                                        <h4 className="font-bold text-gray-400">Chi nhánh Hà Nội</h4>
-                                        <p className="text-gray-500">Nhà vườn 03, KĐT Tinh thành, Vĩnh Hưng, Hoàng Mai, Hà Nội</p>
+                                        <h4 className="font-bold text-gray-400"> Địa chỉ: </h4>
+                                        <p className="text-gray-500">Số 10, Ngõ 192, Thái Thịnh, Đống Đa, Hà Nội</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-2">
                                     <Phone size={16} className="text-gray-400 mt-1" />
                                     <div>
                                         <h4 className="font-bold text-gray-400">TƯ VẤN HÀ NỘI</h4>
-                                        <p className="text-gray-500">Tel: 090 776 1102</p>
+                                        <p className="text-gray-500">Tel: 033 440 3206</p>
                                     </div>
                                 </div>
                             </div>
