@@ -6,6 +6,7 @@ import { ChevronDown, Phone, User, ShoppingCart, Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Image from 'next/image';
+import  RecentlyViewedProducts from './RecentlyViewedProducts';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,12 +30,8 @@ const Header = () => {
                     {/* Phần giữa: Search và Dropdown */}
                     <div className="flex-grow flex items-center justify-center space-x-4 mx-8">
                         <SearchBar />
-                        <button className="flex items-center bg-red-700 hover:bg-red-800 px-4 py-2.5 rounded-md transition-colors whitespace-nowrap">
-                            <span>Sản phẩm đã xem</span>
-                            <ChevronDown className="h-5 w-5 ml-2" />
-                        </button>
+                        <RecentlyViewedProducts />
                     </div>
-
                     {/* Phần bên phải: Hotline và Icons */}
                     <div className="flex items-center space-x-6">
                         <div className="flex items-center space-x-2">
