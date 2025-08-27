@@ -1,12 +1,11 @@
-
-// src/app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import "@/app/globals.css";
-import Header from '@/components/Header'; // Import Header
-import Footer from '@/components/Footer'; // Import Footer
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ContactBubble from '@/components/ContactBubble';
+import { CartProvider } from '@/app/contexts/CartContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,20 +15,22 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-                                       children,
-                                   }: {
+    children,
+}: {
     children: React.ReactNode;
 }) {
     return (
         <html lang="en">
         <body className={`${inter.className} bg-gray-50`}>
-        <Header />
-        <Navbar />
-        <main className="min-h-screen">
-            {children}
-        </main>
-        <ContactBubble />
-        <Footer />
+            <CartProvider>
+                <Header />
+                <Navbar />
+                <main className="min-h-screen">
+                    {children}
+                </main>
+                <ContactBubble />
+                <Footer />
+            </CartProvider>
         </body>
         </html>
     );

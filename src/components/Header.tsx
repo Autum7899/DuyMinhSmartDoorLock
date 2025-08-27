@@ -1,15 +1,16 @@
-// src/components/Header.tsx
-'use client'; // Thêm dòng này ở đầu file vì chúng ta đang dùng useState
+'use client'; 
 
 import Link from 'next/link';
 import { Phone, User, ShoppingCart, Menu, X } from 'lucide-react';
 import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Image from 'next/image';
-import  RecentlyViewedProducts from './RecentlyViewedProducts';
+import RecentlyViewedProducts from './RecentlyViewedProducts';
+import { useCart } from '@/app/contexts/CartContext'; // Import useCart
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { cartCount } = useCart(); // Lấy số lượng sản phẩm từ context
 
     return (
         <header className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
@@ -43,7 +44,14 @@ const Header = () => {
                         </div>
                         <div className="flex items-center space-x-4">
                             <Link href="/tai-khoan"><User className="h-7 w-7 hover:text-yellow-300" /></Link>
-                            <Link href="/gio-hang"><ShoppingCart className="h-7 w-7 hover:text-yellow-300" /></Link>
+                            <Link href="/gio-hang" className="relative">
+                                <ShoppingCart className="h-7 w-7 hover:text-yellow-300" />
+                                {cartCount > 0 && (
+                                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                        {cartCount}
+                                    </span>
+                                )}
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -58,11 +66,21 @@ const Header = () => {
                             <div className="text-xs text-gray-300">Smart Door Lock</div>
                         </div>
                     </Link>
-
-                    {/* Hamburger Menu Icon */}
-                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
-                        {isMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
-                    </button>
+                    
+                    {/* Icons bên phải trên mobile */}
+                    <div className="flex items-center gap-4">
+                        <Link href="/gio-hang" className="relative">
+                            <ShoppingCart className="h-7 w-7" />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+                            {isMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -79,7 +97,7 @@ const Header = () => {
                             </div>
                         </div>
                         <Link href="/tai-khoan" className="flex items-center space-x-2"><User /><span>Tài khoản</span></Link>
-                        <Link href="/gio-hang" className="flex items-center space-x-2"><ShoppingCart /><span>Giỏ hàng</span></Link>
+                        {/* Link giỏ hàng đã có ở header, có thể bỏ ở đây nếu muốn */}
                     </div>
                 </div>
             )}
