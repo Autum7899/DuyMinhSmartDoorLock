@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { Facebook, Youtube, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
+    // Style for the brand name, consistent with the Header
+    const brandNameStyle = "text-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]";
+
     return (
         <footer className="bg-gray-800 text-white">
             <div className="container mx-auto px-4 py-10">
@@ -15,8 +18,10 @@ const Footer = () => {
                         <Link href="/" className="flex items-center space-x-2">
                             <Image src="/logo.png" alt="Duy Minh Logo" width={50} height={50} />
                             <div>
-                                <div className="font-bold text-lg font-etna ">Duy Minh</div>
-                                <div className="text-xs text-gray-300">Smart Door Lock</div>
+                                {/* --- UPDATED: Applied brand style and increased font size --- */}
+                                <div className={`font-bold text-2xl font-etna ${brandNameStyle}`}>Duy Minh</div>
+                                {/* --- UPDATED: Increased font size --- */}
+                                <div className="text-sm text-gray-300">Smart Door Lock</div>
                             </div>
                         </Link>
                         <p className="text-gray-400">

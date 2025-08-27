@@ -6,11 +6,13 @@ import SearchBar from './SearchBar';
 import { useState } from 'react';
 import Image from 'next/image';
 import RecentlyViewedProducts from './RecentlyViewedProducts';
-import { useCart } from '@/app/contexts/CartContext'; // Import useCart
+import { useCart } from '@/app/contexts/CartContext';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { cartCount } = useCart(); // Lấy số lượng sản phẩm từ context
+    const { cartCount } = useCart();
+
+    const brandNameStyle = "text-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]";
 
     return (
         <header className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
@@ -21,8 +23,10 @@ const Header = () => {
                     <div className="flex-shrink-0">
                         <Link href="/" className="flex items-center space-x-4 no-underline text-white">
                             <div className="text-left">
-                                <div className="font-bold text-xl tracking-wide font-etna">Duy Minh</div>
-                                <div className="text-xs text-gray-300">Smart Door Lock</div>
+                                {/* --- DESKTOP: Increased font size from text-xl to text-3xl --- */}
+                                <div className={`font-bold text-3xl tracking-wide font-etna ${brandNameStyle}`}>Duy Minh</div>
+                                {/* --- DESKTOP: Increased font size from text-xs to text-sm --- */}
+                                <div className="text-sm text-gray-300">Smart Door Lock</div>
                             </div>
                             <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={60} height={60} style={{ objectFit: 'contain' }} />
                         </Link>
@@ -62,8 +66,10 @@ const Header = () => {
                     <Link href="/" className="flex items-center space-x-2 no-underline text-white">
                         <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={40} height={40} style={{ objectFit: 'contain' }} />
                         <div>
-                            <div className="font-bold text-base">Duy Minh</div>
-                            <div className="text-xs text-gray-300">Smart Door Lock</div>
+                             {/* --- MOBILE: Increased font size from text-base to text-lg --- */}
+                            <div className={`font-bold text-lg ${brandNameStyle}`}>Duy Minh</div>
+                            {/* --- MOBILE: Increased font size from text-xs to text-sm --- */}
+                            <div className="text-sm text-gray-300">Smart Door Lock</div>
                         </div>
                     </Link>
                     
@@ -97,7 +103,6 @@ const Header = () => {
                             </div>
                         </div>
                         <Link href="/tai-khoan" className="flex items-center space-x-2"><User /><span>Tài khoản</span></Link>
-                        {/* Link giỏ hàng đã có ở header, có thể bỏ ở đây nếu muốn */}
                     </div>
                 </div>
             )}
