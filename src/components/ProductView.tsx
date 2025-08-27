@@ -16,6 +16,7 @@ type ProductViewProps = Omit<products, 'price_agency' | 'price_retail' | 'price_
     price_retail_with_install: number;
 };
 
+
 const formatPrice = (price: number | bigint) => {
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(Number(price));
 };
@@ -24,7 +25,12 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
     const { addProduct } = useRecentlyViewed();
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
-    const [notification, setNotification] = useState<{ show: boolean; message: string; product?: any; quantity?: number; } | null>(null);
+    const [notification, setNotification] = useState<{ 
+    show: boolean; 
+    message: string; 
+    product?: { name: string; image_url: string }; // <-- Changed from 'any' to a specific type
+    quantity?: number; 
+} | null>(null);
     
     // State để quản lý modal Mua Ngay
     const [isModalOpen, setIsModalOpen] = useState(false);
