@@ -1,4 +1,3 @@
-// src/components/Notification.tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,35 +5,33 @@ import Image from 'next/image';
 import { X, CheckCircle } from 'lucide-react';
 
 type NotificationProps = {
-    product: {
+    // Message là bắt buộc, dùng để hiển thị nội dung chính
+    message: string;
+    // Product và quantity là tùy chọn, chỉ hiển thị nếu được cung cấp
+    product?: {
         name: string;
         image_url: string;
     };
-    quantity: number;
+    quantity?: number;
     onClose: () => void;
 };
 
-export default function Notification({ product, quantity, onClose }: NotificationProps) {
+export default function Notification({ message, product, quantity, onClose }: NotificationProps) {
     const [isVisible, setIsVisible] = useState(false);
 
     // Hiệu ứng xuất hiện và tự động đóng sau 5 giây
     useEffect(() => {
-        // Bắt đầu animation xuất hiện
         setIsVisible(true);
-
-        // Đặt hẹn giờ để tự động đóng
         const timer = setTimeout(() => {
             handleClose();
         }, 5000); // 5 giây
-
-        // Dọn dẹp hẹn giờ khi component bị hủy
         return () => clearTimeout(timer);
     }, []);
 
     // Hàm xử lý đóng thông báo
     const handleClose = () => {
         setIsVisible(false);
-        // Đợi animation kết thúc (300ms) rồi mới gọi hàm onClose của component cha
+        // Đợi animation kết thúc rồi mới gọi hàm onClose của component cha
         setTimeout(onClose, 300);
     };
 
@@ -51,21 +48,26 @@ export default function Notification({ product, quantity, onClose }: Notificatio
 
             {/* Nội dung thông báo */}
             <div className="flex-grow">
-                <h4 className="font-bold text-gray-900">Thêm vào giỏ hàng thành công!</h4>
-                <div className="flex items-center gap-3 mt-2">
-                    <div className="relative w-14 h-14 bg-gray-100 rounded">
-                        <Image
-                            src={product.image_url}
-                            alt={product.name}
-                            layout="fill"
-                            className="object-contain"
-                        />
+                {/* Luôn hiển thị message chính */}
+                <h4 className="font-bold text-gray-900">{message}</h4>
+                
+                {/* Chỉ hiển thị chi tiết sản phẩm nếu có */}
+                {product && quantity && (
+                    <div className="flex items-center gap-3 mt-2">
+                        <div className="relative w-14 h-14 bg-gray-100 rounded">
+                            <Image
+                                src={product.image_url}
+                                alt={product.name}
+                                layout="fill"
+                                className="object-contain"
+                            />
+                        </div>
+                        <div>
+                            <p className="text-sm font-semibold text-gray-800 line-clamp-1">{product.name}</p>
+                            <p className="text-xs text-gray-500">Số lượng: {quantity}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p className="text-sm font-semibold text-gray-800 line-clamp-1">{product.name}</p>
-                        <p className="text-xs text-gray-500">Số lượng: {quantity}</p>
-                    </div>
-                </div>
+                )}
             </div>
 
             {/* Nút đóng */}

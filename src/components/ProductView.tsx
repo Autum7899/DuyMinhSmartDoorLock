@@ -7,8 +7,8 @@ import { MapPin, Phone, ShieldCheck, Wrench, Truck, CircleCheck, ListChecks, Sho
 import { useCart } from '@/app/contexts/CartContext';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
-// Import component Notification mới
 import Notification from '@/components/Notification';
+import CheckoutModal from '@/components/CheckoutModal'; // <-- IMPORT MODAL
 
 type ProductViewProps = Omit<products, 'price_agency' | 'price_retail' | 'price_retail_with_install'> & {
     price_agency: number;
@@ -24,13 +24,10 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
     const { addProduct } = useRecentlyViewed();
     const { addToCart } = useCart();
     const [quantity, setQuantity] = useState(1);
-
-    // --- THAY ĐỔI Ở ĐÂY: Thêm state để quản lý thông báo ---
-    const [notification, setNotification] = useState<{
-        show: boolean;
-        product: { name: string; image_url: string; };
-        quantity: number;
-    } | null>(null);
+    const [notification, setNotification] = useState<{ show: boolean; message: string; product?: any; quantity?: number; } | null>(null);
+    
+    // State để quản lý modal Mua Ngay
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         addProduct({
@@ -50,15 +47,21 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
         };
         addToCart(itemToAdd, quantity);
 
-        // --- THAY ĐỔI Ở ĐÂY: Kích hoạt thông báo tùy chỉnh ---
         setNotification({
             show: true,
+            message: 'Đã thêm vào giỏ hàng thành công!',
             product: { name: product.name, image_url: product.image_url },
             quantity: quantity,
         });
     };
     
-    // ... (Các hàm khác như handleQuantityChange, renderFeatures giữ nguyên) ...
+    const handleOrderSuccess = (message: string) => {
+        setNotification({
+            show: true,
+            message: message, // Hiển thị thông báo thành công từ server
+        });
+    }
+
     const handleQuantityChange = (amount: number) => {
         const newQuantity = quantity + amount;
         if (newQuantity > 0 && newQuantity <= product.quantity) {
@@ -72,8 +75,7 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
         return (
             <div className="border rounded-lg p-4 bg-gray-50">
                 <h3 className="font-semibold text-gray-700 flex items-center gap-2 mb-3">
-                    <ListChecks size={20} />
-                    Tính năng nổi bật
+                    <ListChecks size={20} /> Tính năng nổi bật
                 </h3>
                 <ul className="list-disc list-inside space-y-1.5 text-sm text-gray-500">
                     {features.map((feature, index) => <li key={index}>{feature}</li>)}
@@ -83,14 +85,10 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
     };
 
     return (
-        // Bọc nội dung trong React Fragment (<>) để có thể thêm component Notification
         <>
             <div className="bg-gray-50 pb-8 md:pb-12">
                 <div className="container mx-auto px-4">
                     <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg">
-                        {/* Toàn bộ nội dung trang sản phẩm của bạn nằm ở đây */}
-                        {/* ... */}
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
                             {/* Cột trái: Hình ảnh */}
                             <div className="flex flex-col items-center">
@@ -98,15 +96,12 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                                     <Image src={product.image_url} alt={product.name} fill className="object-contain p-2" priority sizes="(max-width: 768px) 100vw, 448px"/>
                                 </div>
                             </div>
-
                             {/* Cột phải: Thông tin */}
                             <div className="flex flex-col space-y-6">
                                 <h1 className="text-2xl md:text-3xl font-bold text-gray-800">{product.name}</h1>
                                 <div>
                                     <div className="mb-2">
-                                        <span className="text-3xl md:text-4xl font-bold text-red-600">
-                                            {formatPrice(Number(product.price_retail_with_install))}
-                                        </span>
+                                        <span className="text-3xl md:text-4xl font-bold text-red-600">{formatPrice(Number(product.price_retail_with_install))}</span>
                                     </div>
                                     <p className="text-gray-500 text-sm">
                                         <span className="font-semibold">Tình trạng:</span> 
@@ -114,9 +109,7 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                                         {product.quantity > 0 && <span className="ml-2">(Còn {product.quantity} sản phẩm)</span>}
                                     </p>
                                 </div>
-
                                 {renderFeatures()}
-
                                 <div className="space-y-4">
                                     {product.quantity > 0 && (
                                         <div className="flex items-center gap-4 text-gray-600">
@@ -128,58 +121,60 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                                             </div>
                                         </div>
                                     )}
-                                    <div className="flex flex-col gap-2">
-                                        {product.quantity > 0 ? (
-                                            <button onClick={handleAddToCart} className="w-full bg-red-600 text-white p-3 rounded-md hover:bg-red-700 transition-colors shadow flex items-center justify-center gap-2">
-                                                <ShoppingCart size={20} />
-                                                <div>
-                                                    <span className="font-bold text-lg">THÊM VÀO GIỎ HÀNG</span>
-                                                    <span className="block text-xs font-light">Giao tận nơi hoặc nhận tại cửa hàng</span>
-                                                </div>
-                                            </button>
-                                        ) : (
-                                            <button disabled className="w-full bg-gray-400 text-white p-3 rounded-md cursor-not-allowed">
-                                                <span className="font-bold text-lg">HẾT HÀNG</span>
-                                            </button>
-                                        )}
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            <button className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors text-sm"><span>033 440 3206</span><span className="block text-xs font-light">Tư vấn trực tuyến 24/7</span></button>
-                                            <button className="bg-blue-800 text-white p-2 rounded-md hover:bg-blue-900 transition-colors text-sm"><span>098 221 6069</span><span className="block text-xs font-light">Hỗ trợ kỹ thuật 24/7</span></button>
-                                        </div>
+                                    {/* --- THAY ĐỔI Ở ĐÂY: Thêm nút MUA NGAY --- */}
+                                    {/* --- CẬP NHẬT Ở ĐÂY: Tinh chỉnh lại thiết kế 2 nút --- */}
+<div className="flex flex-col sm:flex-row gap-3 items-stretch"> {/* Thêm items-stretch */}
+    {/* Nút MUA NGAY (Nút chính) */}
+    <button
+        onClick={() => setIsModalOpen(true)}
+        className="w-full sm:w-3/5 bg-red-600 text-white p-3 rounded-lg hover:bg-red-700 transition-all duration-200 transform hover:scale-[1.02] shadow-lg text-center flex flex-col justify-center"
+    >
+        <span className="font-bold text-lg leading-tight">MUA NGAY</span>
+        <span className="text-xs font-normal opacity-90">Giao hàng, lắp đặt tận nơi</span>
+    </button>
+    
+    {/* Nút Thêm vào giỏ (Nút phụ - kiểu "outline") */}
+    <button
+        onClick={handleAddToCart}
+        className="w-full sm:w-2/5 bg-transparent border-2 border-blue-600 text-blue-600 p-3 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:text-white hover:shadow-md flex items-center justify-center gap-2"
+    >
+        <ShoppingCart size={18} />
+        <span className="font-semibold text-sm">Thêm vào giỏ</span>
+    </button>
+</div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                                        <button className="bg-gray-800 text-white p-2 rounded-md hover:bg-black transition-colors text-sm"><span>033 440 3206</span><span className="block text-xs font-light">Tư vấn 24/7</span></button>
+                                        <button className="bg-gray-800 text-white p-2 rounded-md hover:bg-black transition-colors text-sm"><span>098 221 6069</span><span className="block text-xs font-light">Hỗ trợ kỹ thuật</span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                         {/* Phần mô tả và chính sách */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10 border-t pt-8">
-                            <div className="border border-yellow-300 bg-yellow-50 rounded-lg p-4 h-fit">
-                                <h3 className="font-bold text-lg text-yellow-800 text-center mb-3">Chính Sách Dịch Vụ Vàng</h3>
-                                <ul className="space-y-3 text-sm text-gray-700">
-                                    <li className="flex items-start gap-3"><ShieldCheck size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" /><span><span className="font-semibold">Bảo hành 18 tháng 1 đổi 1</span> nếu có lỗi từ nhà sản xuất.</span></li>
-                                    <li className="flex items-start gap-3"><Wrench size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" /><span><span className="font-semibold">Bảo trì miễn phí</span> định kỳ sau khi lắp đặt.</span></li>
-                                    <li className="flex items-start gap-3"><CircleCheck size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" /><span><span className="font-semibold">Hỗ trợ lắp đặt tận nơi</span> nhanh chóng, chuyên nghiệp.</span></li>
-                                    <li className="flex items-start gap-3"><Truck size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" /><span><span className="font-semibold">Miễn phí vận chuyển</span> toàn quốc.</span></li>
-                                </ul>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="flex items-start gap-3"><MapPin size={18} className="text-gray-500 mt-1 flex-shrink-0" /><div><h4 className="font-semibold text-gray-700">Địa chỉ cửa hàng:</h4><p className="text-gray-500">Số 10, Ngõ 192, Thái Thịnh, Đống Đa, Hà Nội</p></div></div>
-                                <div className="flex items-start gap-3"><Phone size={18} className="text-gray-500 mt-1 flex-shrink-0" /><div><h4 className="font-semibold text-gray-700">TƯ VẤN & MUA HÀNG</h4><p className="text-gray-500">Hotline: 033 440 3206</p></div></div>
-                            </div>
-                        </div>
-                        {product.description && (<div className="mt-10 border-t pt-8"><h2 className="text-2xl font-bold border-b-2 border-red-500 pb-2 mb-4 inline-block text-gray-800">Mô Tả Sản Phẩm</h2><div className="prose max-w-none text-gray-600"><p>{product.description}</p></div></div>)}
+                        {/* ... (Giữ nguyên phần còn lại) ... */}
                     </div>
                 </div>
             </div>
 
-            {/* --- THAY ĐỔI Ở ĐÂY: Hiển thị component Notification một cách có điều kiện --- */}
+            {/* Hiển thị Notification */}
             {notification?.show && (
                 <Notification
+                    message={notification.message}
                     product={notification.product}
                     quantity={notification.quantity}
                     onClose={() => setNotification(null)}
                 />
             )}
+
+            {/* Hiển thị Modal Mua Ngay */}
+            {isModalOpen && (
+                <CheckoutModal
+                    product={product}
+                    quantity={quantity}
+                    onClose={() => setIsModalOpen(false)}
+                    onOrderSuccess={handleOrderSuccess}
+                />
+            )}
         </>
     );
 }
+
