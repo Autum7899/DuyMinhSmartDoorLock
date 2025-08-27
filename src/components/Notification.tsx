@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { X, CheckCircle } from 'lucide-react';
+import { CheckCircle, X } from 'lucide-react';
 
 type NotificationProps = {
     // Message là bắt buộc, dùng để hiển thị nội dung chính
@@ -19,6 +19,13 @@ type NotificationProps = {
 export default function Notification({ message, product, quantity, onClose }: NotificationProps) {
     const [isVisible, setIsVisible] = useState(false);
 
+    // Hàm xử lý đóng thông báo
+    const handleClose = useCallback(() => {
+        setIsVisible(false);
+        // Đợi animation kết thúc rồi mới gọi hàm onClose của component cha
+        setTimeout(onClose, 300);
+    }, [onClose]);
+
     // Hiệu ứng xuất hiện và tự động đóng sau 5 giây
     useEffect(() => {
         setIsVisible(true);
@@ -26,14 +33,8 @@ export default function Notification({ message, product, quantity, onClose }: No
             handleClose();
         }, 5000); // 5 giây
         return () => clearTimeout(timer);
-    }, []);
+    }, [handleClose]);
 
-    // Hàm xử lý đóng thông báo
-    const handleClose = () => {
-        setIsVisible(false);
-        // Đợi animation kết thúc rồi mới gọi hàm onClose của component cha
-        setTimeout(onClose, 300);
-    };
 
     return (
         <div

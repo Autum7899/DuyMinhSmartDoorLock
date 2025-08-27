@@ -111,7 +111,7 @@ export async function createOrderFromCart(formData: FormData, cartItems: CartIte
 
         // --- BẮT ĐẦU TRANSACTION ---
         // Tăng thời gian chờ và timeout để xử lý các trường hợp cao điểm
-        const result = await prisma.$transaction(async (tx) => {
+        await prisma.$transaction(async (tx) => {
             // 1. Kiểm tra tồn kho (sử dụng dữ liệu đã lấy trước đó)
             for (const item of cartItems) {
                 const product = productMap.get(item.id);
@@ -172,11 +172,14 @@ export async function createOrderFromCart(formData: FormData, cartItems: CartIte
         await Promise.all(
             cartItems.map(item => revalidatePath(`/san-pham/${item.id}`))
         );
-        revalidatePath('/(root)/gio-hang'); // Revalidate trang giỏ hàng
+        revalidatePath('/gio-hang'); // Revalidate trang giỏ hàng
 
         return { success: true, message: 'Đặt hàng thành công! Chúng tôi sẽ liên hệ với bạn sớm.' };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('Error creating order from cart:', error);
-        return { success: false, message: error.message || 'Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.' };
+        if (error instanceof Error) {
+            return { success: false, message: error.message };
+        }
+        return { success: false, message: 'Đã có lỗi xảy ra khi đặt hàng. Vui lòng thử lại.' };
     }
 }

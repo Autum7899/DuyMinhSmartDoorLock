@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { products } from '@prisma/client';
 import Image from 'next/image';
-import { MapPin, Phone, ShieldCheck, Wrench, Truck, CircleCheck, ListChecks, ShoppingCart } from 'lucide-react';
+import { ListChecks, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/app/contexts/CartContext';
 import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
@@ -34,15 +34,16 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
     
     // State để quản lý modal Mua Ngay
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const productForRecentlyViewed = useMemo(() => ({
+        id: product.id,
+        name: product.name,
+        image: product.image_url,
+        href: `/san-pham/${product.id}`
+    }), [product.id, product.name, product.image_url]);
 
     useEffect(() => {
-        addProduct({
-            id: product.id,
-            name: product.name,
-            image: product.image_url,
-            href: `/san-pham/${product.id}`
-        });
-    }, [product, addProduct]);
+        addProduct(productForRecentlyViewed);
+    }, [productForRecentlyViewed, addProduct]);
 
     const handleAddToCart = () => {
         const itemToAdd = {
