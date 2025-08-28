@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://www.duyminhsmartdoorlock.com',
+    siteUrl: 'https://khoaduyminh.netlify.app',
     generateRobotsTxt: true, // (optional)
     // ...other options
 }

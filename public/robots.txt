@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.duyminhsmartdoorlock.com
+Host: https://khoaduyminh.netlify.app
 
 # Sitemaps
-Sitemap: https://www.duyminhsmartdoorlock.com/sitemap.xml
+Sitemap: https://khoaduyminh.netlify.app/sitemap.xml
