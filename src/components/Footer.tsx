@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { Facebook, Youtube, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
-    // Style for the brand name, consistent with the Header
-    const brandNameStyle = "text-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]";
+    // --- UPDATED: Changed the shadow offset from 2px to 1px to make the border thinner ---
+    const brandNameStyle = "text-yellow-400 [text-shadow:-1px_-1px_0_#fff,1px_-1px_0_#fff,-1px_1px_0_#fff,1px_1px_0_#fff]";
 
     return (
         <footer className="bg-gray-800 text-white">
@@ -18,9 +18,7 @@ const Footer = () => {
                         <Link href="/" className="flex items-center space-x-2">
                             <Image src="/logo.png" alt="Duy Minh Logo" width={50} height={50} />
                             <div>
-                                {/* --- UPDATED: Applied brand style and increased font size --- */}
                                 <div className={`font-bold text-2xl font-etna ${brandNameStyle}`}>Duy Minh</div>
-                                {/* --- UPDATED: Increased font size --- */}
                                 <div className="text-sm text-gray-300">Smart Door Lock</div>
                             </div>
                         </Link>
@@ -51,7 +49,7 @@ const Footer = () => {
                         <ul className="space-y-2">
                             <li><a href="#" className="text-gray-400 hover:text-white">Hướng dẫn mua hàng</a></li>
                             <li><a href="#" className="text-gray-400 hover:text-white">Câu hỏi thường gặp</a></li>
-                            <li><a href="#" className="text-gray-400 hover:text-white">Liên hệ</a></li>
+                            <li><a href="#" className="text-gray-400 hover-text-white">Liên hệ</a></li>
                         </ul>
                     </div>
 

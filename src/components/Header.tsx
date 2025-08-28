@@ -12,7 +12,7 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { cartCount } = useCart();
 
-    const brandNameStyle = "text-yellow-400 [text-shadow:-2px_-2px_0_#000,2px_-2px_0_#000,-2px_2px_0_#000,2px_2px_0_#000]";
+    const brandNameStyle = "text-yellow-400 [text-shadow:-1px_-1px_0_#fff,1px_-1px_0_#fff,-1px_1px_0_#fff,1px_1px_0_#fff]";
 
     return (
         <header className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
