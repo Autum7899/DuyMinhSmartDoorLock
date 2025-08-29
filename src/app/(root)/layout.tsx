@@ -6,6 +6,8 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import ContactBubble from '@/components/ContactBubble';
 import { CartProvider } from '@/app/contexts/CartContext';
+import Providers from '@/components/providers';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className={`${inter.className} bg-gray-50`}>
+        <Providers>
             <CartProvider>
                 <Header />
                 <Navbar />
@@ -31,6 +34,7 @@ export default function RootLayout({
                 <ContactBubble />
                 <Footer />
             </CartProvider>
+        </Providers>
         </body>
         </html>
     );
