@@ -33,10 +33,16 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ message, onConfir
     );
 };
 
+interface Category {
+    id: string | number;
+    name: string;
+    description: string;
+}
+
 export default function CategoryManagementPage() {
-    const [categories, setCategories] = useState<any[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [editingCategory, setEditingCategory] = useState<any | null>(null);
+    const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const [showConfirm, setShowConfirm] = useState<boolean>(false);
     const [deleteId, setDeleteId] = useState<string | number | null>(null);
 
@@ -95,7 +101,7 @@ export default function CategoryManagementPage() {
         }
     };
 
-    const startEdit = (category: any) => {
+    const startEdit = (category: Category) => {
         setEditingCategory(category);
         setFormState({ name: category.name, description: category.description });
     };
