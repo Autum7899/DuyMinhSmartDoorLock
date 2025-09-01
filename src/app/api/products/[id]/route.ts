@@ -19,8 +19,9 @@ function parseBodyNumber(input: unknown, fallback = 0) {
 }
 
 // GET /api/products/:id
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
 
@@ -40,8 +41,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 }
 
 // PUT /api/products/:id
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
 
@@ -92,8 +94,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE /api/products/:id
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
 

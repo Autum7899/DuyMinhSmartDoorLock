@@ -15,9 +15,10 @@ function parseId(param: string) {
 // GET /api/categories/:id -> detail (tuỳ nhu cầu)
 export async function GET(
     _req: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id === null) return NextResponse.json({ message: 'Invalid id' }, { status: 400 });
 
@@ -34,9 +35,10 @@ export async function GET(
 // PUT /api/categories/:id -> update
 export async function PUT(
     req: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id === null) return NextResponse.json({ message: 'Invalid id' }, { status: 400 });
 
@@ -68,9 +70,10 @@ export async function PUT(
 // DELETE /api/categories/:id -> remove
 export async function DELETE(
     _req: Request,
-    { params }: { params: { id: string } }
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id === null) return NextResponse.json({ message: 'Invalid id' }, { status: 400 });
 

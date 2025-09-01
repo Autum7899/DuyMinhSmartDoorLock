@@ -20,8 +20,9 @@ function parseStatusEnum(input: unknown): $Enums.order_status | undefined {
 }
 
 // GET /api/orders/:id -> alias order_items -> items cho client
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(_req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
 
@@ -50,8 +51,9 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
 
 // PUT /api/orders/:id
 // Body: { customer_name?: string, phone_number?: string, address?: string, status?: string, items?: [{ product_id, quantity }] }
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
 
@@ -117,8 +119,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE /api/orders/:id
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(_req: Request, context: { params: Promise<{ id: string }> }) {
     try {
+        const params = await context.params;
         const id = parseId(params.id);
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
         await prisma.orders.delete({ where: { id } });
