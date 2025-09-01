@@ -296,7 +296,7 @@ export default function AdminProductsPage() {
                             <label className="block text-sm font-medium text-gray-700">Danh mục</label>
                             <select
                                 className={inputCls}
-                                value={form.category_id}
+                                value={form.category_id ?? ""}
                                 onChange={(e) =>
                                     setField("category_id", e.target.value === "" ? "" : Number(e.target.value))
                                 }
