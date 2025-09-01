@@ -4,10 +4,10 @@ import { prisma } from "@/lib/db/prisma";
 import { Prisma } from "@prisma/client";
 
 // Decimal -> number để trả JSON
-const toNum = (v: any) =>
+const toNum = (v: unknown) =>
     v && typeof v === "object" && "toNumber" in v ? Number(v as Prisma.Decimal) : Number(v ?? 0);
 
-function parseBodyNumber(input: any, fallback = 0) {
+function parseBodyNumber(input: unknown, fallback = 0) {
     const n = Number(input);
     return Number.isFinite(n) ? n : fallback;
 }

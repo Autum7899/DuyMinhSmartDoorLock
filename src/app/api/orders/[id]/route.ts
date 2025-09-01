@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 // ĐỔI import nếu prisma ở nơi khác:
 // import { prisma } from "@/lib/prisma";
 import { prisma } from "@/lib/db/prisma";
-import { $Enums } from "@prisma/client";
+import { $Enums, Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -58,7 +58,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         const body = await req.json();
         const { customer_name, phone_number, address, status, items } = body ?? {};
 
-        const data: any = {};
+        const data: Prisma.ordersUpdateInput = {};
         if (typeof customer_name === "string") data.customer_name = customer_name;
         if (typeof phone_number === "string") data.phone_number = phone_number;
         if (typeof address === "string") data.address = address;
@@ -77,7 +77,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
         if (Array.isArray(items)) {
             // Lấy giá GIẢM để tính lại tổng & price_at_purchase
-            const productIds = items.map((it: any) => Number(it.product_id)).filter(Boolean);
+            const productIds = items.map((it: { product_id: number }) => Number(it.product_id)).filter(Boolean);
             const products = await prisma.products.findMany({
                 where: { id: { in: productIds } },
                 select: { id: true, price_retail_with_install: true },
@@ -85,7 +85,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             const priceMap = new Map(products.map(p => [p.id, Number(p.price_retail_with_install ?? 0)]));
 
             let total_amount = 0;
-            const creates = items.map((it: any) => {
+            const creates = items.map((it: { product_id: number; quantity: number }) => {
                 const product_id = Number(it.product_id);
                 const quantity = Math.max(1, Number(it.quantity ?? 1));
                 const unit = priceMap.get(product_id) ?? 0;
@@ -105,9 +105,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         });
 
         return NextResponse.json(updated);
-    } catch (e: any) {
-        if (e?.code === "P2025") {
-            return NextResponse.json({ message: "Đơn hàng không tồn tại" }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === "P2025") {
+                return NextResponse.json({ message: "Đơn hàng không tồn tại" }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: "Cập nhật đơn hàng thất bại" }, { status: 500 });
@@ -121,9 +123,11 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
         if (id == null) return NextResponse.json({ message: "Invalid id" }, { status: 400 });
         await prisma.orders.delete({ where: { id } });
         return NextResponse.json({ ok: true });
-    } catch (e: any) {
-        if (e?.code === "P2025") {
-            return NextResponse.json({ message: "Đơn hàng không tồn tại" }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === "P2025") {
+                return NextResponse.json({ message: "Đơn hàng không tồn tại" }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: "Xoá đơn hàng thất bại" }, { status: 500 });

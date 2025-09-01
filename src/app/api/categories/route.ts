@@ -1,4 +1,5 @@
 // src/app/api/categories/route.ts
+import { Prisma } from "@prisma/client";
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
 
@@ -31,10 +32,11 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json(created, { status: 201 });
-    } catch (e: any) {
-        // bắt lỗi unique name
-        if (e?.code === 'P2002') {
-            return NextResponse.json({ message: 'Tên danh mục đã tồn tại' }, { status: 409 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === 'P2002') {
+                return NextResponse.json({ message: 'Tên danh mục đã tồn tại' }, { status: 409 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: 'Failed to create category' }, { status: 500 });

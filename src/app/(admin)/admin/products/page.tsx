@@ -100,8 +100,12 @@ export default function AdminProductsPage() {
                 throw new Error((await res.json().catch(() => ({}))).message || "Không thể tải sản phẩm");
             const data = (await res.json()) as Product[];
             setItems(data);
-        } catch (e: any) {
-            setErr(e?.message || "Không thể tải sản phẩm");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                setErr(e.message);
+            } else {
+                setErr("Không thể tải sản phẩm");
+            }
         } finally {
             setLoading(false);
         }
@@ -188,8 +192,12 @@ export default function AdminProductsPage() {
 
             await fetchProducts();
             resetForm();
-        } catch (e: any) {
-            alert(e?.message || "Có lỗi xảy ra");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert(e.message);
+            } else {
+                alert("Có lỗi xảy ra");
+            }
         } finally {
             setSubmitting(false);
         }
@@ -202,8 +210,12 @@ export default function AdminProductsPage() {
             if (!res.ok)
                 throw new Error((await res.json().catch(() => ({}))).message || "Xoá thất bại");
             await fetchProducts();
-        } catch (e: any) {
-            alert(e?.message || "Có lỗi xảy ra khi xoá");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert(e.message);
+            } else {
+                alert("Có lỗi xảy ra khi xoá");
+            }
         } finally {
             setDeleteId(null);
         }
@@ -284,7 +296,7 @@ export default function AdminProductsPage() {
                             <label className="block text-sm font-medium text-gray-700">Danh mục</label>
                             <select
                                 className={inputCls}
-                                value={form.category_id as any}
+                                value={form.category_id}
                                 onChange={(e) =>
                                     setField("category_id", e.target.value === "" ? "" : Number(e.target.value))
                                 }
@@ -305,7 +317,7 @@ export default function AdminProductsPage() {
                             <input
                                 type="number"
                                 className={inputCls}
-                                value={form.price_agency as any}
+                                value={form.price_agency}
                                 onChange={(e) =>
                                     setField("price_agency", e.target.value === "" ? "" : Number(e.target.value))
                                 }
@@ -321,7 +333,7 @@ export default function AdminProductsPage() {
                             <input
                                 type="number"
                                 className={inputCls}
-                                value={form.price_retail as any}
+                                value={form.price_retail}
                                 onChange={(e) =>
                                     setField("price_retail", e.target.value === "" ? "" : Number(e.target.value))
                                 }
@@ -339,7 +351,7 @@ export default function AdminProductsPage() {
                             <input
                                 type="number"
                                 className={inputCls}
-                                value={form.price_retail_with_install as any}
+                                value={form.price_retail_with_install}
                                 onChange={(e) =>
                                     setField(
                                         "price_retail_with_install",

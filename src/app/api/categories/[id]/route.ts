@@ -1,4 +1,5 @@
 // src/app/api/categories/[id]/route.ts
+import { Prisma } from "@prisma/client";
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/prisma';
 
@@ -50,12 +51,14 @@ export async function PUT(
         });
 
         return NextResponse.json(updated);
-    } catch (e: any) {
-        if (e?.code === 'P2002') {
-            return NextResponse.json({ message: 'Tên danh mục đã tồn tại' }, { status: 409 });
-        }
-        if (e?.code === 'P2025') {
-            return NextResponse.json({ message: 'Danh mục không tồn tại' }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === 'P2002') {
+                return NextResponse.json({ message: 'Tên danh mục đã tồn tại' }, { status: 409 });
+            }
+            if (e.code === 'P2025') {
+                return NextResponse.json({ message: 'Danh mục không tồn tại' }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: 'Failed to update category' }, { status: 500 });
@@ -73,9 +76,11 @@ export async function DELETE(
 
         await prisma.categories.delete({ where: { id } });
         return NextResponse.json({ ok: true });
-    } catch (e: any) {
-        if (e?.code === 'P2025') {
-            return NextResponse.json({ message: 'Danh mục không tồn tại' }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === 'P2025') {
+                return NextResponse.json({ message: 'Danh mục không tồn tại' }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: 'Failed to delete category' }, { status: 500 });

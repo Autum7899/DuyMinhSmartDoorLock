@@ -6,15 +6,25 @@ import React, { useEffect, useMemo, useState } from "react";
 type Product = {
     id: number;
     name: string;
-    price_retail_with_install: number; // Giá giảm
+    price_retail_with_install: number;
 };
 
-type OrderRow = {
+type Order = {
     id: number;
     customer_name: string;
-    status?: string | null;
+    status: string;
     total_amount: number;
     created_at: string;
+    phone_number: string;
+    address: string;
+    items: OrderItem[];
+};
+
+type OrderItem = {
+    id: number;
+    product_id: number;
+    quantity: number;
+    price: number;
 };
 
 type OrderDetail = {
@@ -50,7 +60,7 @@ const STATUS_OPTIONS = ["NEW", "CONFIRMED", "FINISHED", "CANCELLED"] as const;
 export default function OrdersPage() {
     // Data
     const [products, setProducts] = useState<Product[]>([]);
-    const [orders, setOrders] = useState<OrderRow[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
 
     // UX
     const [loading, setLoading] = useState(true);
@@ -80,14 +90,8 @@ export default function OrdersPage() {
     const fetchProducts = async () => {
         const res = await fetch("/api/products", { cache: "no-store" });
         if (!res.ok) throw new Error("Không thể tải sản phẩm");
-        const data = (await res.json()) as any[];
-        setProducts(
-            data.map((p) => ({
-                id: Number(p.id),
-                name: String(p.name ?? ""),
-                price_retail_with_install: Number(p.price_retail_with_install ?? 0),
-            }))
-        );
+        const data: Product[] = await res.json();
+        setProducts(data);
     };
 
     const fetchOrders = async () => {
@@ -99,18 +103,14 @@ export default function OrdersPage() {
                 const j = await res.json().catch(() => ({}));
                 throw new Error(j?.message || "Không thể tải danh sách đơn hàng");
             }
-            const data = (await res.json()) as any[];
-            setOrders(
-                (Array.isArray(data) ? data : []).map((o) => ({
-                    id: Number(o.id),
-                    customer_name: String(o.customer_name ?? ""),
-                    status: o.status ?? null,
-                    total_amount: Number(o.total_amount ?? 0),
-                    created_at: String(o.created_at ?? ""),
-                }))
-            );
-        } catch (e: any) {
-            setErr(e?.message || "Không thể tải danh sách đơn hàng");
+            const data: Order[] = await res.json();
+            setOrders(data);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                setErr(e.message);
+            } else {
+                setErr("Không thể tải danh sách đơn hàng");
+            }
         } finally {
             setLoading(false);
         }
@@ -122,13 +122,13 @@ export default function OrdersPage() {
             const j = await res.json().catch(() => ({}));
             throw new Error(j?.message || "Không thể tải đơn hàng");
         }
-        const o = (await res.json()) as OrderDetail;
+        const o: OrderDetail = await res.json();
         setEditingId(Number(o.id));
         setForm({
             customer_name: String(o.customer_name ?? ""),
             phone_number: String(o.phone_number ?? ""),
             address: String(o.address ?? ""),
-            status: STATUS_OPTIONS.includes(String(o.status ?? "").toUpperCase() as any)
+            status: STATUS_OPTIONS.includes(String(o.status ?? "").toUpperCase() as typeof STATUS_OPTIONS[number])
                 ? String(o.status ?? "").toUpperCase()
                 : "NEW",
             items: (o.items || []).map((it) => ({
@@ -191,13 +191,13 @@ export default function OrdersPage() {
         try {
             setSubmitting(true);
 
-            const payload: any = {
+            const payload: Partial<Order> = {
                 customer_name: form.customer_name.trim(),
                 status: form.status, // Gửi đúng enum string
                 items: form.items.map((it) => ({
                     product_id: Number(it.product_id),
                     quantity: Math.max(1, Number(it.quantity || 1)),
-                })),
+                })) as OrderItem[],
             };
 
             if (editingId == null) {
@@ -224,8 +224,12 @@ export default function OrdersPage() {
 
             await fetchOrders();
             resetForm();
-        } catch (e: any) {
-            alert(e?.message || "Có lỗi xảy ra");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert(e.message);
+            } else {
+                alert("Có lỗi xảy ra");
+            }
         } finally {
             setSubmitting(false);
         }
@@ -240,8 +244,12 @@ export default function OrdersPage() {
                 throw new Error(j?.message || "Xoá thất bại");
             }
             await fetchOrders();
-        } catch (e: any) {
-            alert(e?.message || "Có lỗi xảy ra khi xoá");
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert(e.message);
+            } else {
+                alert("Có lỗi xảy ra khi xoá");
+            }
         } finally {
             setDeleteId(null);
         }
@@ -369,7 +377,7 @@ export default function OrdersPage() {
                                                 <td className="px-4 py-2">
                                                     <select
                                                         className={selectCls}
-                                                        value={it.product_id as any}
+                                                        value={it.product_id}
                                                         onChange={(e) =>
                                                             setLine(idx, { product_id: e.target.value === "" ? "" : Number(e.target.value) })
                                                         }

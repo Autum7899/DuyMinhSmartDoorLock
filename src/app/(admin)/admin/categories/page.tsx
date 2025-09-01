@@ -74,8 +74,12 @@ export default function CategoryManagementPage() {
             }
             const data: Category[] = await res.json();
             setCategories(data);
-        } catch (error: any) {
-            setErrorMsg(error?.message || "Không thể tải danh mục");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                setErrorMsg(error.message);
+            } else {
+                setErrorMsg("Không thể tải danh mục");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -135,8 +139,12 @@ export default function CategoryManagementPage() {
             }
             await fetchCategories();
             resetForm();
-        } catch (error: any) {
-            alert(error?.message || "Có lỗi xảy ra");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                alert(error.message);
+            } else {
+                alert("Có lỗi xảy ra");
+            }
         } finally {
             setSubmitting(false);
         }
@@ -158,8 +166,12 @@ export default function CategoryManagementPage() {
                     throw new Error(j?.message || "Xóa thất bại");
                 }
                 await fetchCategories();
-            } catch (error: any) {
-                alert(error?.message || "Có lỗi xảy ra");
+            } catch (error: unknown) {
+                if (error instanceof Error) {
+                    alert(error.message);
+                } else {
+                    alert("Có lỗi xảy ra");
+                }
             }
         }
         setShowConfirm(false);

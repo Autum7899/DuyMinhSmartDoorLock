@@ -10,7 +10,6 @@ import {
     Package,
     ClipboardList,
     ChevronRight,
-    Menu,
     X,
     LucideIcon,
 } from "lucide-react";

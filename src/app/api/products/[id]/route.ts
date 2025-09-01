@@ -5,7 +5,7 @@ import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
-const toNum = (v: any) =>
+const toNum = (v: unknown) =>
     v && typeof v === "object" && "toNumber" in v ? Number(v as Prisma.Decimal) : Number(v ?? 0);
 
 function parseId(idStr: string) {
@@ -13,7 +13,7 @@ function parseId(idStr: string) {
     return Number.isFinite(n) ? n : null;
 }
 
-function parseBodyNumber(input: any, fallback = 0) {
+function parseBodyNumber(input: unknown, fallback = 0) {
     const n = Number(input);
     return Number.isFinite(n) ? n : fallback;
 }
@@ -80,9 +80,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             price_retail: toNum(updated.price_retail),
             price_retail_with_install: toNum(updated.price_retail_with_install),
         });
-    } catch (e: any) {
-        if (e?.code === "P2025") {
-            return NextResponse.json({ message: "Sản phẩm không tồn tại" }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === "P2025") {
+                return NextResponse.json({ message: "Sản phẩm không tồn tại" }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: "Cập nhật thất bại" }, { status: 500 });
@@ -97,9 +99,11 @@ export async function DELETE(_req: Request, { params }: { params: { id: string }
 
         await prisma.products.delete({ where: { id } });
         return NextResponse.json({ ok: true });
-    } catch (e: any) {
-        if (e?.code === "P2025") {
-            return NextResponse.json({ message: "Sản phẩm không tồn tại" }, { status: 404 });
+    } catch (e: unknown) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError) {
+            if (e.code === "P2025") {
+                return NextResponse.json({ message: "Sản phẩm không tồn tại" }, { status: 404 });
+            }
         }
         console.error(e);
         return NextResponse.json({ message: "Xoá thất bại" }, { status: 500 });

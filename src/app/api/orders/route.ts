@@ -54,7 +54,7 @@ export async function POST(req: Request) {
         }
 
         // Lấy đơn giá GIÁ GIẢM hiện tại
-        const productIds = items.map((it: any) => Number(it.product_id)).filter(Boolean);
+        const productIds = items.map((it: { product_id: number }) => Number(it.product_id)).filter(Boolean);
         const products = await prisma.products.findMany({
             where: { id: { in: productIds } },
             select: { id: true, price_retail_with_install: true },
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
 
         // Tính total_amount & chuẩn bị order_items (có price_at_purchase)
         let total_amount = 0;
-        const orderItemsCreate = items.map((it: any) => {
+        const orderItemsCreate = items.map((it: { product_id: number; quantity: number }) => {
             const product_id = Number(it.product_id);
             const quantity = Math.max(1, Number(it.quantity ?? 1));
             const unit = priceMap.get(product_id) ?? 0;
