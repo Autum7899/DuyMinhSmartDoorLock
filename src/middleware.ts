@@ -10,7 +10,7 @@ export default withAuth(
         console.log("Executing middleware for path: ", req.nextUrl.pathname);
         console.log("Token in middleware: ", req.nextauth.token);
         // You can add logic here to perform role-based access control if needed.
-        // For example, check if `req.nextauth.token.role` is 'admin'.
+        // For example, check if `req.nextauth.token.role` is '(admin)'.
         // If the logic inside `authorized` callback passes, this function will be executed.
 
         // console.log("Token: ", req.nextauth.token);
@@ -39,9 +39,9 @@ export default withAuth(
 export const config = {
     /*
      * This matcher protects two sets of routes:
-     * 1. The root admin page: /admin
-     * 2. All pages inside the admin directory: /admin/...
-     * This ensures that both /admin and /admin/example are secure.
+     * 1. The root (admin) page: /(admin)
+     * 2. All pages inside the (admin) directory: /(admin)/...
+     * This ensures that both /(admin) and /(admin)/example are secure.
      */
-    matcher: ["/admin", "/admin/:path*"],
+    matcher: ["/(admin)", "/(admin)/:path*"],
 };

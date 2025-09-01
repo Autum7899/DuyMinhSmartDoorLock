@@ -22,7 +22,7 @@ export default function LoginPage() {
         });
 
         if (result?.ok) {
-            // On success, redirect to the admin dashboard
+            // On success, redirect to the (admin) dashboard
             router.replace('/admin/dashboard');
         } else {
             setError('Email hoặc mật khẩu không hợp lệ. Vui lòng thử lại.');
