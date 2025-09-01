@@ -54,15 +54,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const [open, setOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-800 antialiased">
-            
-
+        // Dùng min-h thay vì h-screen để có thể cao hơn màn hình khi nội dung dài
+        <div className="min-h-screen min-h-[100dvh] bg-gray-100 text-gray-800 antialiased">
             {/* THÂN TRANG: sidebar + nội dung */}
-            <div className="flex h-screen">
+            <div className="flex min-h-screen min-h-[100dvh] items-stretch">
                 {/* Sidebar (mobile overlay + desktop cố định) */}
                 <aside
                     className={[
-                        "fixed inset-y-0 left-0 z-40 w-72 transform bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-2xl transition-transform duration-300 md:static md:translate-x-0 md:w-72",
+                        "fixed inset-y-0 left-0 z-40 w-72 transform bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-2xl transition-transform duration-300",
+                        "md:static md:translate-x-0 md:w-72 md:flex md:flex-col",
                         open ? "translate-x-0" : "-translate-x-full md:translate-x-0",
                     ].join(" ")}
                 >
@@ -97,7 +97,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         ))}
                     </nav>
 
-                    {/* Footer nhỏ */}
+                    {/* Footer nhỏ – tự đẩy xuống đáy nhờ flex-col */}
                     <div className="mt-auto p-5 text-xs text-gray-300/70">
                         <div className="rounded-xl bg-white/5 p-3 ring-1 ring-white/10">
                             <p className="font-medium text-gray-100">Tip</p>
@@ -106,7 +106,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </div>
                 </aside>
 
-                {/* Nội dung: đẩy phải bằng đúng chiều rộng sidebar trên desktop */}
+                {/* Nội dung */}
                 <div className="flex-1 w-full">
                     <main className="p-6">{children}</main>
                 </div>
