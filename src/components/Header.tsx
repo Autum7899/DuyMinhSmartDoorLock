@@ -42,12 +42,11 @@ const Header = () => {
                         <div className="flex items-center space-x-2">
                             <Phone className="h-8 w-8" />
                             <div className="text-left">
-                                <p className="font-bold text-lg leading-tight">033.440.3206</p>
+                                <p className="font-bold text-lg leading-tight">098.221.6069</p>
                                 <p className="text-xs">Hỗ trợ mua hàng</p>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <Link href="/tai-khoan"><User className="h-7 w-7 hover:text-yellow-300" /></Link>
                             <Link href="/gio-hang" className="relative">
                                 <ShoppingCart className="h-7 w-7 hover:text-yellow-300" />
                                 {cartCount > 0 && (
