@@ -92,13 +92,15 @@ export default async function HomePage() {
                                 </h2>
 
                                 {/* Lưới sản phẩm */}
-                                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                    {category.products.map((product) => (
-                                        <ProductCard
-                                            key={product.id}
-                                            product={product}
-                                        />
-                                    ))}
+                                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                                    <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                        {category.products.map((product) => (
+                                            <ProductCard
+                                                key={product.id}
+                                                product={product}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </section>
