@@ -3,8 +3,7 @@ import HeroSection from '@/components/HeroSection';
 import ProductCard from '@/components/ProductCard';
 import { prisma } from '@/lib/db/prisma';
 
-
-export const revalidate = 60; // ISR mỗi 60s (tuỳ chỉnh)
+export const revalidate = 60;
 
 type ProductForCard = {
     id: number;
@@ -64,7 +63,6 @@ async function getCategoriesWithProducts() {
 export default async function HomePage() {
     const categoriesWithProducts = await getCategoriesWithProducts();
 
-    // --- THÊM BẢNG DỊCH TIÊU ĐỀ Ở ĐÂY ---
     const categoryTitleMap: { [key: string]: string } = {
         'classic lock': 'Khóa Cơ Truyền Thống',
         'facial&fingerprint lock': 'Khóa Nhận Diện Khuôn Mặt & Vân Tay',
@@ -72,35 +70,41 @@ export default async function HomePage() {
     };
 
     return (
-        <main>
+        <div className="bg-gray-50">
             <HeroSection />
-            {categoriesWithProducts.map((category) => {
-                if (category.products.length === 0) return null;
 
-                return (
-                    <section
-                        key={category.id}
-                        id={category.name}
-                        className="bg-white py-12"
-                    >
-                        <div className="container mx-auto px-4">
-                            {/* --- THAY ĐỔI CÁCH HIỂN THỊ TIÊU ĐỀ --- */}
-                            <h2 className="text-3xl font-bold text-center text-black mb-8">
-                                {categoryTitleMap[category.name] || category.name}
-                            </h2>
+            <div id="products" className="space-y-20 py-12">
+                {categoriesWithProducts.map((category) => {
+                    if (category.products.length === 0) return null;
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                                {category.products.map((product) => (
-                                    <ProductCard
-                                        key={product.id}
-                                        product={product}
-                                    />
-                                ))}
+                    return (
+                        <section
+                            key={category.id}
+                            id={category.name}
+                            className="scroll-mt-24"
+                        >
+                            <div className="container mx-auto px-4 md:px-6 lg:px-8">
+                                {/* Tiêu đề danh mục */}
+                                <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12 relative">
+                                    <span className="px-4 py-2 rounded-lg bg-white shadow-sm">
+                                        {categoryTitleMap[category.name] || category.name}
+                                    </span>
+                                </h2>
+
+                                {/* Lưới sản phẩm */}
+                                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                                    {category.products.map((product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            product={product}
+                                        />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    </section>
-                );
-            })}
-        </main>
+                        </section>
+                    );
+                })}
+            </div>
+        </div>
     );
 }
