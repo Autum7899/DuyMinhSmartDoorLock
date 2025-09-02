@@ -67,7 +67,7 @@ export default function HeroSection() {
                             Xem các sản phẩm
                         </a>
                         <a
-                            href="#contact"
+                            href="/lien-he"
                             className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-base font-semibold text-red-700 ring-1 ring-inset ring-red-200 transition-all duration-300 hover:scale-105 hover:bg-red-50"
                         >
                             Liên hệ tư vấn

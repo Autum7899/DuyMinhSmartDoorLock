@@ -66,7 +66,7 @@ const Header = () => {
                         <Image src="/logo.png" alt="Duy Minh Smart Door Lock Logo" width={40} height={40} style={{ objectFit: 'contain' }} />
                         <div>
                              {/* --- MOBILE: Increased font size from text-base to text-lg --- */}
-                            <div className={`font-bold text-lg ${brandNameStyle}`}>Duy Minh</div>
+                            <div className={`font-etna text-lg ${brandNameStyle}`}>Duy Minh</div>
                             {/* --- MOBILE: Increased font size from text-xs to text-sm --- */}
                             <div className="text-sm text-gray-300">Smart Door Lock</div>
                         </div>

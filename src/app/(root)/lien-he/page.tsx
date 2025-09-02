@@ -53,6 +53,14 @@ export default function ContactPage() {
                         loading="lazy"
                         allowFullScreen
                     ></iframe>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!4v1756823373220!6m8!1m7!1su_FkHWpzoxKrTEF1E5Yy0w!2m2!1d21.01386254038748!2d105.8159519656209!3f132.70732932957645!4f-4.959679933011955!5f0.7820865974627469"
+                        width="100%"
+                        height="300"
+                        style={{ border: 0 }}
+                        loading="lazy"
+                        allowFullScreen
+                    ></iframe>
                 </div>
             </div>
         </div>
