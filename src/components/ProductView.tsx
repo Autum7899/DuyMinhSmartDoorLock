@@ -9,6 +9,7 @@ import { useRecentlyViewed } from '@/hooks/useRecentlyViewed';
 
 import Notification from '@/components/Notification';
 import CheckoutModal from '@/components/CheckoutModal';
+import ProductDescription from '@/components/ProductDescription';
 
 type ProductViewProps = Omit<
     products,
@@ -17,6 +18,7 @@ type ProductViewProps = Omit<
     price_agency: number;
     price_retail: number;
     price_retail_with_install: number;
+    description: string | null; // Đảm bảo description có thể là null
 };
 
 const formatPrice = (price: number | bigint) => {
@@ -130,14 +132,14 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                                 </h1>
 
                                 <div className="mb-4">
-                  <span className="text-2xl md:text-3xl font-bold text-red-600 block mb-1.5">
-                    {formatPrice(Number(product.price_retail_with_install))}
-                  </span>
+                                  <span className="text-2xl md:text-3xl font-bold text-red-600 block mb-1.5">
+                                    {formatPrice(Number(product.price_retail_with_install))}
+                                  </span>
                                     <p className="text-gray-600 text-sm">
                                         <span className="font-semibold">Tình trạng:</span>{' '}
                                         <span className={product.quantity > 0 ? 'text-green-600' : 'text-red-600'}>
-                      {product.quantity > 0 ? 'Còn hàng' : 'Hết hàng'}
-                    </span>
+                                          {product.quantity > 0 ? 'Còn hàng' : 'Hết hàng'}
+                                        </span>
                                         {product.quantity > 0 && (
                                             <span className="ml-1.5">(Còn {product.quantity} sản phẩm)</span>
                                         )}
@@ -146,12 +148,11 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
 
                                 {renderFeatures()}
 
-                                {/* Chính sách bảo hành & dịch vụ (vàng) */}
                                 <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 mb-5 shadow-sm">
                                     <h3 className="mb-3 flex items-center gap-2 text-[15px] font-semibold text-amber-800">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-100 text-amber-600">
-                      ⭐
-                    </span>
+                                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-amber-100 text-amber-600">
+                                          ⭐
+                                        </span>
                                         Chính sách bảo hành & dịch vụ
                                     </h3>
                                     <ul className="list-disc list-inside space-y-1.5 text-[13px] leading-5 text-amber-700">
@@ -194,8 +195,8 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                                         >
                                             <span className="font-bold text-base leading-tight">MUA NGAY</span>
                                             <span className="text-[11px] font-normal opacity-90">
-                        Giao hàng, lắp đặt tận nơi
-                      </span>
+                                                Giao hàng, lắp đặt tận nơi
+                                            </span>
                                         </button>
 
                                         <button
@@ -221,15 +222,8 @@ export default function ProductView({ product }: { product: ProductViewProps }) 
                             </div>
                         </div>
 
-                        {/* Phần mô tả sản phẩm */}
-                        {product.description && (
-                            <div className="mt-6 border-t pt-5">
-                                <h2 className="text-lg font-bold text-gray-800 mb-2.5">Mô tả sản phẩm</h2>
-                                <p className="text-gray-600 text-[13px] leading-6 whitespace-pre-line">
-                                    {product.description}
-                                </p>
-                            </div>
-                        )}
+                        {/* Phần mô tả sản phẩm đã được tách ra component riêng */}
+                        <ProductDescription htmlContent={product.description} />
                     </div>
                 </div>
             </div>
