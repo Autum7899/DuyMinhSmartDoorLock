@@ -1,4 +1,3 @@
-import { slugify } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -35,7 +34,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         : 0;
 
     return (
-        <Link href={`/san-pham/${slugify(product.name)}`} className="group block">
+        <Link href={`/san-pham/${product.id}`} className="group block">
             {/* Card */}
             <div className="h-full flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:border-blue-500">
                 {/* Ảnh */}
