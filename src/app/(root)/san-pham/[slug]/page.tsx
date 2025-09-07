@@ -1,10 +1,23 @@
 // src/app/(root)/san-pham/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import ProductView from '@/components/ProductView';
-// import RecentlyViewedProducts from '@/components/RecentlyViewedProducts'; // Removed for now to match original display
 import { slugify } from '@/lib/utils';
-import { Product } from '@/models/productModel';
 import { Metadata } from 'next';
+
+// This type now correctly represents the data fetched from the API
+type Product = {
+    id: number;
+    name: string;
+    image_url: string;
+    description: string | null;
+    price_agency: number;
+    price_retail: number;
+    price_retail_with_install: number;
+    quantity: number;
+    category_id: number | null;
+    created_at: string;
+    updated_at: string;
+};
 
 type ProductPageProps = {
   params: {
@@ -30,8 +43,8 @@ async function getProductBySlug(slug: string): Promise<Product | undefined> {
     return products.find(p => slugify(p.name) === slug);
 }
 
-export async function generateMetadata(props: ProductPageProps): Promise<Metadata> {
-    const slug = props.params.slug;
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+    const slug = params.slug;
     const product = await getProductBySlug(slug);
 
     if (!product) {
@@ -49,21 +62,21 @@ export async function generateMetadata(props: ProductPageProps): Promise<Metadat
     };
 }
 
-export default async function ProductPage(props: ProductPageProps) {
-  const slug = props.params.slug;
+export default async function ProductPage({ params }: ProductPageProps) {
+  const slug = params.slug;
   const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
   }
 
-  // Re-introducing the data transformation to fix display issues.
-  const plainProduct = {
-    ...product,
-    price_agency: Number(product.price_agency),
-    price_retail: Number(product.price_retail),
-    price_retail_with_install: Number(product.price_retail_with_install),
+  // The API already returns numbers, so direct assignment is fine.
+  // The ProductView component expects these properties.
+  const productForView = {
+      ...product,
+      // Ensure description is not undefined, which can happen with JSON
+      description: product.description ?? null,
   };
 
-  return <ProductView product={plainProduct} />;
+  return <ProductView product={productForView} />;
 }
