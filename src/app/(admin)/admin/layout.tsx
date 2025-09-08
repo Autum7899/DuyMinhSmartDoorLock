@@ -55,9 +55,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         // Dùng min-h thay vì h-screen để có thể cao hơn màn hình khi nội dung dài
-        <div className="min-h-screen min-h-[100dvh] bg-gray-100 text-gray-800 antialiased">
+        <div className="min-h-screen  bg-gray-100 text-gray-800 antialiased">
             {/* THÂN TRANG: sidebar + nội dung */}
-            <div className="flex min-h-screen min-h-[100dvh] items-stretch">
+            <div className="flex min-h-screen  items-stretch">
                 {/* Sidebar (mobile overlay + desktop cố định) */}
                 <aside
                     className={[
